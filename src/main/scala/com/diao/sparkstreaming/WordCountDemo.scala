@@ -1,6 +1,7 @@
 package com.diao.sparkstreaming
 
-import org.apache.spark.SparkConf
+import org.apache.log4j.{Level, Logger}
+import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 /**
@@ -11,8 +12,12 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
  */
 object WordCountDemo {
   def main(args: Array[String]): Unit = {
+    //设置日志级别
+    Logger.getLogger("org").setLevel(Level.ERROR)
     val conf = new SparkConf().setMaster("local[*]").setAppName("SparkStreamingWordCount")
-    val ssc = new StreamingContext(conf,Seconds(10));
+    //val sc = new SparkContext(conf)
+    //val ssc1 = new StreamingContext(sc,Seconds(2))
+    val ssc = new StreamingContext(conf,Seconds(3));
 
     val lines = ssc.socketTextStream("localhost",9999)
 
